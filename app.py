@@ -1,5 +1,6 @@
 from flask import Flask
 from sqlalchemy import false
+from flask_sqlalchemy import SQLAlchemy
 
 from api import api_bp  # Import the API blueprint
 from config import Config  # Import the configuration class

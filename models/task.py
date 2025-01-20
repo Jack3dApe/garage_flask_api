@@ -23,7 +23,7 @@ class Task(db.Model):
     employee_id = db.Column(db.Integer, db.ForeignKey('employee.employee_id'), nullable=False)  # Foreign key to Employee
     start_date = db.Column(db.Date, nullable=False)  # Start date (mandatory)
     end_date = db.Column(db.Date)  # End date (optional)
-    status = db.Column(db.String(20), nullable=False, default='pending')  # Status with default value 'pending'
+    status = db.Column(db.String(20), nullable=False, default="default_task_status")  # Status with default value 'pending'
     work_id = db.Column(db.Integer, db.ForeignKey('work.work_id'), nullable=False)  # Foreign key to Work
 
     # Audit information
@@ -32,6 +32,7 @@ class Task(db.Model):
     # Relationships
     employee = db.relationship('Employee', backref='tasks')  # Relationship with Employee model
     work = db.relationship('Work', backref='tasks')  # Relationship with Work model
+
 
     def __repr__(self):
         """

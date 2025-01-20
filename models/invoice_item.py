@@ -18,11 +18,15 @@ class InvoiceItem(db.Model):
     # Invoice item details
     description = db.Column(db.Text, nullable=False)  # Item description (mandatory)
     cost = db.Column(db.Float, nullable=False)  # Cost of the item (mandatory)
-    invoice_id = db.Column(db.Integer, db.ForeignKey('invoice.invoice_id'), nullable=False)  # Foreign key to Invoice
+    invoice_id = db.Column(db.Integer, db.ForeignKey('invoice.invoice_id'), nullable=False) # Foreign key to Invoice
     task_id = db.Column(db.Integer, db.ForeignKey('task.task_id'), nullable=True)  # Foreign key to Task (optional)
 
     # Relationships
-    invoice = db.relationship('Invoice', backref='items')  # Relationship with Invoice model
+    invoice = db.relationship(
+        'Invoice',
+        backref='invoice_items',
+        overlaps="items,parent_invoice"
+    )  # Relationship with Invoice model
     task = db.relationship('Task', backref='invoice_items')  # Relationship with Task model
 
     def __repr__(self):

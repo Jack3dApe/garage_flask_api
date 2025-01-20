@@ -17,15 +17,20 @@ class Invoice(db.Model):
     invoice_id = db.Column(db.Integer, primary_key=True)
 
     # Invoice details
-    client_id = db.Column(db.Integer, db.ForeignKey('client.client_id'), nullable=False)  # Foreign key to Client
+    client_id = db.Column(db.Integer, db.ForeignKey('client.client_id'), nullable=False)
     issued_at = db.Column(db.DateTime, nullable=False)  # Issue date and time (mandatory)
     total = db.Column(db.Float, nullable=False)  # Total amount (mandatory)
     iva = db.Column(db.Float, nullable=False)  # IVA (mandatory)
     total_with_iva = db.Column(db.Float, nullable=False)  # Total including IVA (mandatory)
 
     # Relationships
-    client = db.relationship('Client', backref='invoices')  # Relationship with Client model
-    items = db.relationship('InvoiceItem', backref='invoice', cascade='all, delete-orphan')  # Relationship with InvoiceItem model
+    client = db.relationship('Client', backref='invoices')
+    items = db.relationship(
+        'InvoiceItem',
+        backref='parent_invoice',
+        cascade='all, delete-orphan',
+        overlaps="invoice_items"
+    ) # Relationship with InvoiceItem model
 
     def __repr__(self):
         """
