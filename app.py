@@ -2,11 +2,14 @@ from flask import Flask
 from sqlalchemy import false
 from flask_sqlalchemy import SQLAlchemy
 
+
 from api import api_bp  # Import the API blueprint
 from config import Config  # Import the configuration class
 from utils.database import db  # Import the SQLAlchemy database instance
 from utils.utils import configure_logging  # Import the logging configuration function
 from errors.errors import register_error_handlers
+from flask_cors import CORS
+
 
 
 def create_app():
@@ -23,6 +26,7 @@ def create_app():
         db.init_app(app) # Initialize extensions (e.g., SQLAlchemy)
         # Register blueprints (e.g., API routes)
         app.register_blueprint(api_bp)
+        CORS(app, resources={r"/api/*": {"origins": "*"}})
         return app
 
     except Exception as e:

@@ -1,5 +1,10 @@
+from flask import Flask
 from flask import Blueprint
 from flask_restx import Api
+from flask_cors import CORS
+
+
+
 
 # Main Blueprint for all API routes
 api_bp = Blueprint('api', __name__, url_prefix='/api')
@@ -24,10 +29,9 @@ from .invoice_item import invoice_items_ns
 
 # Add namespaces to the Swagger documentation and API
 api.add_namespace(clients_ns, path='/client')  # Routes for client operations
-api.add_namespace(employees_ns, path='/employee')
+api.add_namespace(employees_ns, path='/employee')  # Routes for employee operations
 api.add_namespace(works_ns, path="/work")
 api.add_namespace(vehicles_ns, path="/vehicle")
-api.add_namespace(employees_ns, path='/employee')  # Routes for employee operations
 api.add_namespace(tasks_ns, path='/task')  # Routes for task operations
 api.add_namespace(invoices_ns, path='/invoice')  # Routes for invoice operations
 api.add_namespace(invoice_items_ns, path='/invoice_item')  # Routes for invoice item operations
