@@ -1,67 +1,118 @@
+# Garage Flask API - Desenvolvido por Alexandre Rocha e Vasile Zbireanu
 
-# Garage API
+O **Garage Flask API** é um sistema modular e escalável desenvolvido para gerenciar uma garagem de reparação automóvel. O sistema foi projetado para realizar operações de CRUD para diversos recursos, incluindo:
 
-This guide explains how to install and configure the **Garage API** project. Follow the steps below to set up the project on your local machine.
+- **Clientes**
+- **Funcionários**
+- **Veículos**
+- **Trabalhos**
+- **Tarefas**
+- **Faturas**
+- **Itens de Faturas**
+- **Configurações Globais**
 
-## Installation
+A estrutura do projeto foi organizada com base em boas práticas de desenvolvimento, garantindo consistência, reutilização de código e facilidade de manutenção. Além disso, o sistema conta com uma documentação interativa via **Swagger**, facilitando o entendimento e a integração com as APIs.
 
-To install and configure the Garage API, follow these steps:
+---
 
-1. **Clone the repository:**  
-   Download the repository to your local machine by running the following command in your terminal:
+## Estrutura do Projeto
+
+O projeto é organizado em diferentes diretórios e arquivos para manter a separação de responsabilidades:
+
+### 1. Diretório `api/`
+
+Contém as implementações das APIs RESTful para cada recurso. As APIs são registradas e documentadas automaticamente pelo **Flask-RESTx**.
+
+### 2. Diretório `models/`
+
+Define os modelos de dados utilizando **SQLAlchemy**, representando as tabelas do banco de dados e suas relações. Modelos principais incluem:
+
+- **Client**: Informações sobre clientes.
+- **Employee**: Dados de funcionários.
+- **Vehicle**: Detalhes de veículos.
+- **Work**: Serviços realizados.
+- **Invoice** e **Invoice Item**: Gestão de faturas e itens de faturas.
+
+### 3. Diretório `services/`
+
+Encapsula a lógica de negócios do sistema, como operações CRUD e interações com o banco de dados. Cada serviço corresponde a um recurso da aplicação.
+
+### 4. Script SQL
+
+Um arquivo SQL inicializa a estrutura do banco de dados e popula as tabelas com dados de exemplo para testes.
+
+### 5. Frontend
+
+O frontend foi desenvolvido como uma interface funcional e dinâmica, utilizando **HTML**, **CSS** (Tabler e Bootstrap) e **JavaScript**. Ele consome as APIs para exibir e gerenciar os dados dos recursos.
+
+---
+
+## Preparação para Executar a Aplicação
+
+### 1. Pré-requisitos
+
+Certifique-se de ter instalados:
+
+- **Python 3.10+**
+- **pip**
+- **Banco de Dados SQLite** ou outro compatível configurado no projeto
+
+### 2. Configuração do Ambiente
+
+1. Clone este repositório:
+
    ```bash
-   git clone https://github.com/nacsantos/garage_flask_api.git
+   git clone https://github.com/Jack3dApe/garage_flask_api
+   cd garage-flask-api
    ```
 
-2. **Navigate to the project directory:**  
-   After cloning the repository, move to the project directory:
+2. Crie um ambiente virtual e ative-o:
+
    ```bash
-   cd garage_flask_api
+   python -m venv venv
+   source venv/bin/activate   # Linux/Mac
+   venv\Scripts\activate      # Windows
    ```
 
-3. **Create and activate a virtual environment:**  
-   To isolate the project dependencies, create a virtual environment. Use the following commands:  
-   - For Linux/macOS:
-     ```bash
-     python3 -m venv venv
-     source venv/bin/activate
-     ```
-   - For Windows:
-     ```bash
-     python3 -m venv venv
-     venv\Scripts\activate
-     ```
+3. Instale as dependências:
 
-4. **Install the dependencies:**  
-   With the virtual environment active, install the required packages using the `requirements.txt` file:
    ```bash
    pip install -r requirements.txt
    ```
 
-5. **Run the application:**  
-   To verify that the installation is successful, start the Flask application:
+4. Inicialize o banco de dados:
+
+   ```bash
+   flask db upgrade  # Se usar migrations
+   python scripts.sql
+   ```
+
+5. Execute o servidor:
    ```bash
    flask run
    ```
-   The application will be available at:
-   ```
-   http://127.0.0.1:5000/api
-   ```
-
-## Accessing the Swagger Documentation
-
-To access the Swagger documentation, start the Flask application and navigate to the following URL in your browser:
-```
-http://127.0.0.1:5000/api/docs
-```
-
-The Swagger interface allows you to:
-- Explore all API endpoints and models.
-- Perform test calls to the API.
-- Review parameters and expected responses.
-
-The Swagger documentation is a valuable tool for developers, enabling seamless interaction with the API while improving productivity and ensuring code quality.
+   O servidor estará disponível em [http://127.0.0.1:5000](http://127.0.0.1:5000).
 
 ---
 
-By following these steps, you will have the **Garage API** up and running on your local machine. If you encounter any issues, please check the repository or submit an issue.
+## Preparção do Frontend
+
+1. Certifique-se de que o backend está em execução.
+2. Abra o diretório do frontend (como `dashboard/`) e configure um servidor local. Por exemplo:
+   ```bash
+   python -m http.server
+   ```
+3. Abra o navegador em [http://127.0.0.1:8000](http://127.0.0.1:8000).
+
+---
+
+## Funcionalidades Implementadas
+
+- **Clientes**: Gerenciamento de cadastro, visualização e exclusão.
+- **Funcionários**: Gestão de papéis, contato e estado de contratação.
+- **Veículos**: Associação com clientes e gerenciamento de informações.
+- **Trabalhos**: Registros detalhados de serviços realizados.
+- **Tarefas**: Controle de atividades atribuídas aos funcionários.
+- **Faturas**: Emissão e detalhamento de pagamentos.
+
+---
